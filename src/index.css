@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette: Deep charcoal, warm ivory, refined neutrals, muted antique gold */
+  --color-charcoal: #0F1012;
+  --color-charcoal-deep: #090A0C;
+  --color-charcoal-surface: #17181B;
+  --color-charcoal-border: #24262B;
+  --color-charcoal-muted: #2E3138;
+
+  --color-ivory: #F7F5F0;
+  --color-ivory-light: #FDFAF5;
+  --color-ivory-warm: #EFECE6;
+  --color-ivory-muted: #D8D4CC;
+
+  --color-gold: #C2A676;
+  --color-gold-light: #D6BD90;
+  --color-gold-muted: #9E855A;
+  --color-gold-dark: #7A6540;
+
+  --color-sand: #8E8A82;
+  --color-stone: #5C5852;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-cinzel: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Spacing Scale */
+  --spacing-container-padding-mobile: 1.25rem;
+  --spacing-container-padding-tablet: 2.5rem;
+  --spacing-container-padding-desktop: 4rem;
+  --spacing-container-padding-wide: 6rem;
+}
+
+:root {
+  /* Design System CSS Variables */
+  --bg-primary: #0F1012;
+  --bg-secondary: #17181B;
+  --bg-tertiary: #1E2025;
+  --text-primary: #F7F5F0;
+  --text-secondary: #D8D4CC;
+  --text-muted: #8E8A82;
+  --border-subtle: rgba(247, 245, 240, 0.08);
+  --border-medium: rgba(247, 245, 240, 0.15);
+  --border-gold: rgba(194, 166, 118, 0.3);
+  --accent-gold: #C2A676;
+  --accent-gold-hover: #D6BD90;
+
+  /* Easing curves */
+  --ease-editorial: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-subtle: 350ms;
+  --duration-reveal: 700ms;
+  --duration-cinematic: 1200ms;
+}
+
+/* Base Styles */
+* {
+  border-color: var(--border-subtle);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: rgba(194, 166, 118, 0.25);
+  color: #FDFAF5;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Editorial line decorative utility */
+.editorial-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(194, 166, 118, 0.3) 30%, rgba(194, 166, 118, 0.3) 70%, transparent);
+}
+
+.editorial-divider-subtle {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(247, 245, 240, 0.12) 30%, rgba(247, 245, 240, 0.12) 70%, transparent);
+}
+
+/* Cinematic Hero Keyframes & Motions */
+@keyframes heroMediaFade {
+  0% {
+    opacity: 0;
+    transform: scale(1.045);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+
+@keyframes heroRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.9;
+  }
+}
+
+.animate-hero-media {
+  animation: heroMediaFade 1800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-hero-reveal-1 {
+  animation: heroRevealUp 900ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-reveal-2 {
+  animation: heroRevealUp 1000ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-reveal-3 {
+  animation: heroRevealUp 1000ms cubic-bezier(0.16, 1, 0.3, 1) 650ms forwards;
+  opacity: 0;
+}
+
+.animate-hero-reveal-4 {
+  animation: heroRevealUp 1000ms cubic-bezier(0.16, 1, 0.3, 1) 850ms forwards;
+  opacity: 0;
+}
+
+.animate-scroll-pulse {
+  animation: scrollPulse 2200ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Subtle Film Grain SVG Texture */
+.hero-grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+

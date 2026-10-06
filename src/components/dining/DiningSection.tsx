@@ -1,0 +1,74 @@
+import React, { useState } from 'react';
+import { Section } from '../Section';
+import { Container } from '../Container';
+import { SectionHeading } from '../SectionHeading';
+import { DiningFeatureMedia } from './DiningFeatureMedia';
+import { DiningSupportingMedia } from './DiningSupportingMedia';
+import { DiningDetails } from './DiningDetails';
+import { DiningExperienceSelector } from './DiningExperienceSelector';
+import { DINING_DATA } from '../../data/diningData';
+
+interface DiningSectionProps {
+  onCheckAvailability?: () => void;
+  className?: string;
+}
+
+export const DiningSection: React.FC<DiningSectionProps> = ({
+  onCheckAvailability,
+  className = '',
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const currentVenue = DINING_DATA[currentIndex] || DINING_DATA[0];
+
+  return (
+    <Section
+      id="dining"
+      variant="surface"
+      spacing="lg"
+      className={`relative ${className}`}
+    >
+      <Container size="xl">
+        {/* Section Introduction */}
+        <div className="mb-12 sm:mb-16">
+          <SectionHeading
+            eyebrow="DINING"
+            title="Dining at Rajwada"
+            subtitle="Authentic culinary hospitality, celebratory banquet feasts, and leisurely dining rooted in regional warmth."
+            align="left"
+          />
+        </div>
+
+        {/* Venue Selector Navigation */}
+        <div className="border-b border-white/5 pb-4 mb-8 sm:mb-12">
+          <DiningExperienceSelector
+            venues={DINING_DATA}
+            currentIndex={currentIndex}
+            onSelectIndex={setCurrentIndex}
+          />
+        </div>
+
+        {/* 1. Large Dominant Feature Image Span (Full 12-column span) */}
+        <div className="mb-8 lg:mb-12">
+          <DiningFeatureMedia dining={currentVenue} />
+        </div>
+
+        {/* 2. Asymmetric Lower Composition: Supporting Detail (7 cols) + Editorial Information (5 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          {/* Supporting Photography / Atmosphere Detail */}
+          <div className="lg:col-span-7">
+            <DiningSupportingMedia dining={currentVenue} />
+          </div>
+
+          {/* Dining Narrative Details & Primary CTA */}
+          <div className="lg:col-span-5">
+            <DiningDetails
+              dining={currentVenue}
+              onCheckAvailability={onCheckAvailability}
+            />
+          </div>
+        </div>
+      </Container>
+    </Section>
+  );
+};
