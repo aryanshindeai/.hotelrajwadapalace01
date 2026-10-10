@@ -25,7 +25,7 @@ export const CelebrationsSection: React.FC<CelebrationsSectionProps> = ({
 
   return (
     <Section
-      id="celebrations"
+      id="events"
       variant="primary"
       spacing="lg"
       className={`relative ${className}`}

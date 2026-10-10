@@ -8,10 +8,12 @@ interface GalleryFiltersProps {
 }
 
 const CATEGORY_TABS: { id: GalleryCategory; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'property', label: 'Property' },
-  { id: 'rooms', label: 'Rooms' },
-  { id: 'celebrations', label: 'Celebrations' },
+  { id: 'all', label: 'All Photos' },
+  { id: 'weddings', label: 'Weddings' },
+  { id: 'other-events', label: 'Other Events' },
+  { id: 'rooms', label: 'Hotel & Rooms' },
+  { id: 'restaurant', label: 'Restaurant & Food' },
+  { id: 'property', label: 'Property & Facilities' },
 ];
 
 export const GalleryFilters: React.FC<GalleryFiltersProps> = ({

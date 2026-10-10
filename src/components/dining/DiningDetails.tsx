@@ -6,12 +6,14 @@ import { Button } from '../Button';
 interface DiningDetailsProps {
   dining: DiningExperience;
   onCheckAvailability?: () => void;
+  onEnquireDining?: () => void;
   className?: string;
 }
 
 export const DiningDetails: React.FC<DiningDetailsProps> = ({
   dining,
   onCheckAvailability,
+  onEnquireDining,
   className = '',
 }) => {
   return (
@@ -83,15 +85,24 @@ export const DiningDetails: React.FC<DiningDetailsProps> = ({
         </div>
       </div>
 
-      {/* Primary Action Button */}
-      <div className="pt-2 sm:pt-4">
+      {/* Distinct Restaurant Actions (Strictly separated from hotel room booking) */}
+      <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-3">
         <Button
           variant="primary"
           size="md"
-          onClick={onCheckAvailability}
-          className="w-full sm:w-auto"
+          onClick={onEnquireDining || onCheckAvailability}
+          className="w-full sm:w-auto text-center"
         >
-          Check Availability
+          Enquire Table &amp; Dining
+        </Button>
+        <Button
+          variant="secondary"
+          size="md"
+          as="a"
+          href="tel:+919921019664"
+          className="w-full sm:w-auto text-center"
+        >
+          Call Restaurant
         </Button>
       </div>
     </div>

@@ -24,7 +24,7 @@ export const AvailabilityButton: React.FC<AvailabilityButtonProps> = ({
       className={`group relative inline-flex items-center justify-center font-sans uppercase font-medium transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] focus:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal cursor-pointer select-none bg-gold text-charcoal-deep border border-gold hover:bg-gold-light hover:border-gold-light active:bg-gold-muted active:border-gold-muted shadow-sm hover:shadow-[0_4px_24px_rgba(194,166,118,0.22)] ${sizeStyles} ${className}`.trim()}
     >
       <span className="relative z-10 transition-transform duration-300 group-hover:scale-[1.02]">
-        Check Availability
+        Book a Room
       </span>
       {/* Refined subtle corner micro-accent for architectural craftsmanship */}
       <span

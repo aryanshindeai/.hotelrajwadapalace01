@@ -15,7 +15,9 @@ import {
   Section,
   SectionHeading,
   Typography,
-  Button,
+  HotelBookingModal,
+  RestaurantEnquiryModal,
+  EventEnquiryModal,
 } from './components';
 
 
@@ -28,7 +30,10 @@ import {
 
 export function App() {
   const [activeSection, setActiveSection] = useState<string>('');
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [roomModalOpen, setRoomModalOpen] = useState(false);
+  const [selectedRoomType, setSelectedRoomType] = useState('Sanctuary Deluxe Room');
+  const [diningModalOpen, setDiningModalOpen] = useState(false);
+  const [eventModalOpen, setEventModalOpen] = useState(false);
 
   const handleSelectSection = (id: string) => {
     setActiveSection(id);
@@ -38,8 +43,17 @@ export function App() {
     }
   };
 
-  const handleCheckAvailability = () => {
-    setBookingModalOpen(true);
+  const handleBookRoom = (roomName?: string) => {
+    if (roomName) setSelectedRoomType(roomName);
+    setRoomModalOpen(true);
+  };
+
+  const handleEnquireDining = () => {
+    setDiningModalOpen(true);
+  };
+
+  const handleEnquireEvent = () => {
+    setEventModalOpen(true);
   };
 
   const handleExplore = () => {
@@ -55,13 +69,14 @@ export function App() {
       <Navigation
         activeSectionId={activeSection}
         onSelectSection={handleSelectSection}
-        onCheckAvailability={handleCheckAvailability}
+        onBookRoom={() => handleBookRoom()}
+        onCheckAvailability={() => handleBookRoom()}
         onContactClick={() => handleSelectSection('contact')}
       />
 
       {/* 2. Step 3 Cinematic Hero Experience */}
       <CinematicHero
-        onCheckAvailability={handleCheckAvailability}
+        onCheckAvailability={() => handleBookRoom()}
         onExplore={handleExplore}
         scrollTargetId="overview"
       />
@@ -111,108 +126,61 @@ export function App() {
         </Section>
 
         {/* Step 5 Rooms & Suites Experience */}
-        <RoomsSection onCheckAvailability={handleCheckAvailability} />
+        <RoomsSection onCheckAvailability={() => handleBookRoom()} />
 
-
-        {/* Step 6 Dining Experience */}
-        <DiningSection onCheckAvailability={handleCheckAvailability} />
-
+        {/* Step 6 Dining Experience (Separated from Hotel Booking) */}
+        <DiningSection
+          onCheckAvailability={handleEnquireDining}
+          onEnquireDining={handleEnquireDining}
+        />
 
         {/* Step 7 Celebrations & Banquets Experience */}
         <CelebrationsSection
-          onEnquire={handleCheckAvailability}
+          onEnquire={handleEnquireEvent}
           onExploreSpace={() => handleSelectSection('gallery')}
         />
 
-
         {/* Step 8 The Tadoba & Chandrapur Experience */}
         <ExperienceSection
-          onCheckAvailability={handleCheckAvailability}
+          onCheckAvailability={() => handleBookRoom()}
           onExploreLocation={() => handleSelectSection('contact')}
         />
 
-
-        {/* Step 9 Cinematic Gallery Experience */}
+        {/* Step 9 Dedicated Luxury Gallery Experience */}
         <GallerySection />
 
         {/* Step 10 Reviews / Trust Experience */}
         <TrustSection onExploreLocation={() => handleSelectSection('contact')} />
 
-
-
         {/* Step 11 Verified Location / Contact Experience */}
         <LocationSection />
 
         {/* Step 12 Final Booking / Conversion Experience */}
-        <BookingCTASection onCheckAvailability={handleCheckAvailability} />
+        <BookingCTASection onCheckAvailability={() => handleBookRoom()} />
       </main>
-
 
       {/* Step 13 Global Luxury Footer */}
       <Footer
-        onCheckAvailability={handleCheckAvailability}
+        onCheckAvailability={() => handleBookRoom()}
         onNavigateSection={handleSelectSection}
       />
 
+      {/* Dedicated Customer Journey Modals (Strictly Separated) */}
+      <HotelBookingModal
+        isOpen={roomModalOpen}
+        onClose={() => setRoomModalOpen(false)}
+        initialRoomType={selectedRoomType}
+      />
 
-      {/* Interactive Booking Modal */}
-      {bookingModalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 bg-charcoal-deep/90 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn"
-        >
-          <div className="border border-gold/40 bg-charcoal-surface p-8 max-w-md w-full shadow-2xl relative">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-              <div>
-                <Typography variant="label" className="text-gold tracking-[0.2em]">
-                  Hotel Rajwada Palace
-                </Typography>
-                <Typography variant="h3" className="text-xl text-ivory-light mt-1">
-                  Check Availability
-                </Typography>
-              </div>
-              <button
-                type="button"
-                onClick={() => setBookingModalOpen(false)}
-                className="text-sand hover:text-ivory text-sm uppercase tracking-wider p-2 cursor-pointer"
-                aria-label="Close dialog"
-              >
-                ✕
-              </button>
-            </div>
-            <p className="text-xs text-sand leading-relaxed mb-6">
-              Our reservation and inquiry desk connects directly to verified availability for stays and banquet celebrations in Chandrapur.
-            </p>
-            <div className="p-4 border border-white/5 bg-charcoal mb-6 text-xs text-ivory-warm space-y-1">
-              <p className="text-gold font-medium">Hotel & Banquet Hall Desk:</p>
-              <p className="text-sand">Near Major Gate, beside Sargam Petrol Pump</p>
-              <p className="text-sand">Durgapur Road / Tadoba Road, Chandrapur</p>
-              <p className="text-gold-light pt-2 font-mono">Direct: 099210 19664</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button
-                variant="primary"
-                size="md"
-                as="a"
-                href="tel:+919921019664"
-                className="w-full text-center"
-              >
-                Call: 099210 19664
-              </Button>
-              <Button
-                variant="secondary"
-                size="md"
-                className="w-full"
-                onClick={() => setBookingModalOpen(false)}
-              >
-                Close
-              </Button>
-            </div>
+      <RestaurantEnquiryModal
+        isOpen={diningModalOpen}
+        onClose={() => setDiningModalOpen(false)}
+      />
 
-          </div>
-        </div>
-      )}
+      <EventEnquiryModal
+        isOpen={eventModalOpen}
+        onClose={() => setEventModalOpen(false)}
+      />
     </div>
   );
 }

@@ -10,11 +10,13 @@ import { DINING_DATA } from '../../data/diningData';
 
 interface DiningSectionProps {
   onCheckAvailability?: () => void;
+  onEnquireDining?: () => void;
   className?: string;
 }
 
 export const DiningSection: React.FC<DiningSectionProps> = ({
   onCheckAvailability,
+  onEnquireDining,
   className = '',
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,7 +25,7 @@ export const DiningSection: React.FC<DiningSectionProps> = ({
 
   return (
     <Section
-      id="dining"
+      id="restaurant"
       variant="surface"
       spacing="lg"
       className={`relative ${className}`}
@@ -65,6 +67,7 @@ export const DiningSection: React.FC<DiningSectionProps> = ({
             <DiningDetails
               dining={currentVenue}
               onCheckAvailability={onCheckAvailability}
+              onEnquireDining={onEnquireDining}
             />
           </div>
         </div>

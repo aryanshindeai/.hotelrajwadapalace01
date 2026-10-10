@@ -15,3 +15,6 @@ export * from './gallery';
 export * from './trust';
 export * from './location';
 export * from './booking';
+export * from './HotelBookingModal';
+export * from './RestaurantEnquiryModal';
+export * from './EventEnquiryModal';

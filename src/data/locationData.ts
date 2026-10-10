@@ -26,12 +26,15 @@ export interface HotelContactData {
   category: string;
   phoneDisplay: string;
   phoneRaw: string; // for tel: links
+  whatsappRaw: string;
+  whatsappUrl: string;
+  instagramUrl: string;
+  instagramHandle: string;
   address: PropertyAddress;
   googleMapsDirectionsUrl: string;
   googleMapsEmbedQuery: string;
   /** Optional fields prepared for future verified data */
   email?: string;
-  whatsappRaw?: string;
 }
 
 export const HOTEL_CONTACT_DATA: HotelContactData = {
@@ -39,6 +42,10 @@ export const HOTEL_CONTACT_DATA: HotelContactData = {
   category: 'Hotel / Banquet Hall',
   phoneDisplay: '099210 19664',
   phoneRaw: '+919921019664',
+  whatsappRaw: '+919921019664',
+  whatsappUrl: 'https://wa.me/919921019664',
+  instagramUrl: 'https://www.instagram.com/hotelrajwadaweddpalace?mdxt=N2gzbXBpeXd5eWlx',
+  instagramHandle: '@hotelrajwadaweddpalace',
   address: {
     line1: 'Near Major Gate',
     line2: 'Beside Sargam Petrol Pump',

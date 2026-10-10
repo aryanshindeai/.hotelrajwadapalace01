@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { type NavItem } from './NavLink';
-import { AvailabilityButton } from './AvailabilityButton';
 
 interface MobileMenuOverlayProps {
   isOpen: boolean;
@@ -8,7 +7,7 @@ interface MobileMenuOverlayProps {
   items: NavItem[];
   activeId?: string;
   onSelect?: (id: string) => void;
-  onCheckAvailability?: () => void;
+  onBookRoom?: () => void;
   id?: string;
 }
 
@@ -18,7 +17,7 @@ export const MobileMenuOverlay: React.FC<MobileMenuOverlayProps> = ({
   items,
   activeId,
   onSelect,
-  onCheckAvailability,
+  onBookRoom,
   id = 'mobile-menu-overlay',
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -59,13 +58,16 @@ export const MobileMenuOverlay: React.FC<MobileMenuOverlayProps> = ({
       role="dialog"
       aria-modal="true"
       aria-label="Mobile Navigation Menu"
-      className="fixed inset-0 z-50 bg-charcoal-deep/98 backdrop-blur-xl flex flex-col justify-between px-6 sm:px-12 py-8 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-charcoal-deep/98 backdrop-blur-2xl flex flex-col justify-between px-6 sm:px-12 py-8 overflow-y-auto"
     >
       {/* Top Bar inside Overlay: Wordmark & Close button */}
       <div className="flex items-center justify-between border-b border-white/10 pb-6">
         <div>
           <span className="font-serif text-lg tracking-wide text-ivory">
             HOTEL RAJWADA PALACE
+          </span>
+          <span className="block text-[10px] font-cinzel text-gold tracking-widest mt-0.5">
+            CHANDRAPUR · MAHARASHTRA
           </span>
         </div>
 
@@ -81,7 +83,7 @@ export const MobileMenuOverlay: React.FC<MobileMenuOverlayProps> = ({
       </div>
 
       {/* Main Editorial Nav Links */}
-      <nav aria-label="Mobile Menu Links" className="py-10 my-auto flex flex-col space-y-6 sm:space-y-8">
+      <nav aria-label="Mobile Menu Links" className="py-8 my-auto flex flex-col space-y-5 sm:space-y-6">
         {items.map((item, idx) => {
           const isActive = activeId === item.id;
           return (
@@ -104,7 +106,7 @@ export const MobileMenuOverlay: React.FC<MobileMenuOverlayProps> = ({
                 <div className="flex items-baseline gap-4">
                   <span className="font-mono text-xs text-sand/60">0{idx + 1}</span>
                   <span
-                    className={`font-serif text-3xl sm:text-4xl lg:text-5xl tracking-normal transition-colors duration-300 ${
+                    className={`font-serif text-2xl sm:text-3xl lg:text-4xl tracking-normal transition-colors duration-300 ${
                       isActive
                         ? 'text-gold italic font-medium'
                         : 'text-ivory group-hover:text-gold-light'
@@ -122,34 +124,56 @@ export const MobileMenuOverlay: React.FC<MobileMenuOverlayProps> = ({
         })}
       </nav>
 
-      {/* Bottom Conversion Action & Property Details */}
-      <div className="pt-6 border-t border-white/10 space-y-6">
-        <AvailabilityButton
-          size="lg"
-          className="w-full"
+      {/* Bottom Conversion Action & Direct Contact */}
+      <div className="pt-6 border-t border-white/10 space-y-4">
+        <div className="grid grid-cols-2 gap-3">
+          {/* Call Now */}
+          <a
+            href="tel:+919921019664"
+            className="flex items-center justify-center gap-2 py-3 px-4 text-xs uppercase tracking-widest font-sans font-medium text-ivory border border-white/20 hover:border-gold hover:text-gold transition-colors text-center"
+          >
+            <svg
+              className="w-4 h-4 text-gold"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <span>Call Now</span>
+          </a>
+
+          {/* WhatsApp */}
+          <a
+            href="https://wa.me/919921019664?text=Hello%20Hotel%20Rajwada%20Palace%2C%20I%20would%20like%20to%20inquire%20about%20a%20booking"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 py-3 px-4 text-xs uppercase tracking-widest font-sans font-medium text-emerald-400 border border-emerald-500/30 hover:border-emerald-400 transition-colors text-center"
+          >
+            <span>WhatsApp</span>
+          </a>
+        </div>
+
+        {/* Book a Room Primary Button */}
+        <button
+          type="button"
           onClick={() => {
             onClose();
-            onCheckAvailability?.();
+            onBookRoom?.();
           }}
-        />
+          className="w-full py-3.5 px-6 text-xs uppercase tracking-[0.2em] font-sans font-medium bg-gold text-charcoal-deep hover:bg-gold-light transition-all text-center"
+        >
+          Book a Room
+        </button>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-sand pt-2">
-          <div>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-gold block mb-1">
-              Location
-            </span>
-            <p className="leading-relaxed">
-              Tukum, Urjanagar, Chandrapur, Maharashtra 442401
-            </p>
-          </div>
-          <div>
-            <span className="text-[10px] tracking-[0.2em] uppercase text-gold block mb-1">
-              Google Verified
-            </span>
-            <p className="leading-relaxed">
-              4.2 Rating · 460 Verified Reviews
-            </p>
-          </div>
+        <div className="pt-2 text-[11px] text-sand/70 text-center">
+          Near Major Gate, Durgapur Road, Chandrapur · Direct: 099210 19664
         </div>
       </div>
     </div>
